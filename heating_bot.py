@@ -1,6 +1,4 @@
-from models import *
 from datetime import datetime
-from sqlalchemy import desc
 from collections import defaultdict
 import logging
 import telegram
