@@ -5,6 +5,10 @@ import json
 import telegram
 from heating_bot import build_bot
 
+import logging
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
 app = Flask(__name__)
 bot = None
 last_update_id = 0
