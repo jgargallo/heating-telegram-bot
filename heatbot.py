@@ -14,7 +14,7 @@ from datetime import datetime
 # Enable logging
 logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        level=logging.INFO)
+        level=logging.WARN)
 
 logger = logging.getLogger(__name__)
 
@@ -54,8 +54,8 @@ def msg_allowed(update):
         return True
     return False
 
-def send_plot(bot, update, date, day):
-    img_file = img.plot(date, day)
+def send_plot(bot, update, date, day, v):
+    img_file = img.plot(date, v, day)
     logger.info(img_file)
     #bot.sendPhoto(chat_id=update.message.chat_id, photo=open(img_file, 'rb'))
     bot.sendPhoto(chat_id=update.message.chat_id, photo=img_file)
@@ -70,8 +70,6 @@ def cmd_on(bot, update, args):
 def cmd_off(bot, update, args):
     if msg_allowed(update):
         bot.sendMessage(update.message.chat_id, text='heating turned off!')
-        date = datetime.now()
-        send_plot(bot, update, date, not 'month' in update.message.text.lower())
 
 def cmd_check(bot, update, args):
     if msg_allowed(update):
@@ -80,7 +78,7 @@ def cmd_check(bot, update, args):
     	    v = value.get('CHECK')
         bot.sendMessage(update.message.chat_id, text=v)
         date = datetime.now()
-        send_plot(bot, update, date, not 'month' in update.message.text.lower())
+        send_plot(bot, update, date, not 'month' in update.message.text.lower(), v)
 
 def main():
     # Create the EventHandler and pass it your bot's token.
